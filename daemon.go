@@ -8,6 +8,7 @@ import (
 	"os"
 	"os/signal"
 	"syscall"
+	"github.com/go-vgo/robotgo"
 
 	"github.com/juwit/streamdeck-daemon/server"
 )
@@ -30,6 +31,8 @@ func main() {
 			panic(err)
 		}
 		fmt.Printf("Button %d pressed\n", btnIndex)
+
+		robotgo.TypeStr("Hello World from streamdeck" + string(btnIndex))
 	})
 
 	setupShutdownHandler(device)
@@ -37,7 +40,7 @@ func main() {
 	server.StartHttpServer()
 }
 
-func setupShutdownHandler(device *streamdeck.Device){
+func setupShutdownHandler(device *streamdeck.Device) {
 	c := make(chan os.Signal)
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 	go func() {
