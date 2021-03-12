@@ -5,7 +5,7 @@ import (
 	streamdeck "github.com/magicmonkey/go-streamdeck"
 	_ "github.com/magicmonkey/go-streamdeck/devices"
 	"image/color"
-	"time"
+	"github.com/juwit/streamdeck-daemon/server"
 )
 
 func main() {
@@ -30,6 +30,5 @@ func main() {
 
 	time.Sleep(5 * time.Second)
 
-	device.ClearButtons()
-	device.Close()
+	server.StartHttpServer()
 }
