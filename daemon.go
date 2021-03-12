@@ -5,6 +5,10 @@ import (
 	streamdeck "github.com/magicmonkey/go-streamdeck"
 	_ "github.com/magicmonkey/go-streamdeck/devices"
 	"image/color"
+	"os"
+	"os/signal"
+	"syscall"
+
 	"github.com/juwit/streamdeck-daemon/server"
 )
 
@@ -28,7 +32,21 @@ func main() {
 		fmt.Printf("Button %d pressed\n", btnIndex)
 	})
 
-	time.Sleep(5 * time.Second)
+	setupShutdownHandler(device)
 
 	server.StartHttpServer()
+}
+
+func setupShutdownHandler(device *streamdeck.Device){
+	c := make(chan os.Signal)
+	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
+	go func() {
+		<-c
+		fmt.Println("\r- Ctrl+C pressed in Terminal")
+
+		// shutting down streamdeck
+		device.ResetComms()
+
+		os.Exit(0)
+	}()
 }
