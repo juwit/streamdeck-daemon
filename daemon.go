@@ -2,10 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/go-vgo/robotgo"
 	streamdeck "github.com/magicmonkey/go-streamdeck"
 	_ "github.com/magicmonkey/go-streamdeck/devices"
 	"os"
+	"os/exec"
 	"os/signal"
 	"syscall"
 
@@ -55,7 +55,7 @@ func main() {
 		for _, button := range currentPage.Buttons {
 			if button.Key == btnIndex {
 				if button.Write != "" {
-					robotgo.PasteStr(button.Write)
+					go exec.Command("xdotool", "type", "--delay", "0", button.Write).Start()
 				}
 			}
 		}
