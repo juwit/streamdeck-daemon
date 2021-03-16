@@ -57,6 +57,10 @@ func main() {
 				if button.Write != "" {
 					go exec.Command("xdotool", "type", "--delay", "0", button.Write).Start()
 				}
+
+				if button.SwitchPage != "" {
+					SwitchToPage(button.SwitchPage)
+				}
 			}
 		}
 	})
