@@ -9,7 +9,7 @@ var device *streamdeck.Device
 
 var config Config
 
-var currentPage *Page
+var CurrentPage *Page
 
 func InitStreamdeck(loadedConfig Config){
 	var err error
@@ -31,7 +31,7 @@ func InitStreamdeck(loadedConfig Config){
 			panic(err)
 		}
 
-		var button = currentPage.GetButton(btnIndex)
+		var button = CurrentPage.GetButton(btnIndex)
 		button.ExecCommand()
 	})
 }
@@ -44,9 +44,9 @@ func switchToPage(pageName string) {
 	// first, clearing buttons
 	device.ClearButtons()
 
-	currentPage = config.GetPage(pageName)
+	CurrentPage = config.GetPage(pageName)
 
-	for _, button := range currentPage.Buttons {
+	for _, button := range CurrentPage.Buttons {
 		renderButton(button)
 	}
 }
@@ -56,3 +56,4 @@ func renderButton(button Button) {
 		device.WriteImageToButton(button.Key, button.Icon)
 	}
 }
+
