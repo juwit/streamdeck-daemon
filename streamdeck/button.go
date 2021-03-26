@@ -22,6 +22,10 @@ type Button struct {
  * executes the key press on the button!
  */
 func (button *Button) ExecCommand() {
+	if button.SwitchPage != "" {
+		SwitchToPage(button.SwitchPage)
+	}
+
 	if button.Write != "" {
 		go exec.Command("xdotool", "type", "--delay", "0", button.Write).Start()
 	}

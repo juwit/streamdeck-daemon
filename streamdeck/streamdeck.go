@@ -32,12 +32,7 @@ func InitStreamdeck(loadedConfig Config){
 		}
 
 		var button = currentPage.GetButton(btnIndex)
-
-		if button.SwitchPage != "" {
-			SwitchToPage(button.SwitchPage)
-		} else {
-			button.ExecCommand()
-		}
+		button.ExecCommand()
 	})
 }
 
