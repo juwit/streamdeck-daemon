@@ -48,10 +48,20 @@ func LoadConfiguration() Config {
 }
 
 
-func (config Config) GetPage(pageName string) *Page {
+func (config *Config) GetPage(pageName string) *Page {
 	for _, page := range config.Pages {
 		if page.Name == pageName {
 			return &page
+		}
+	}
+	return nil
+}
+
+func (page *Page) GetButton(index int) *Button {
+	// find button on page definition
+	for _, button := range page.Buttons {
+		if button.Key == index {
+			return &button
 		}
 	}
 	return nil

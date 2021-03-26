@@ -34,23 +34,20 @@ func InitStreamdeck(loadedConfig configService.Config){
 			panic(err)
 		}
 
-		// find button on page definition
-		for _, button := range currentPage.Buttons {
-			if button.Key == btnIndex {
-				if button.Write != "" {
-					go exec.Command("xdotool", "type", "--delay", "0", button.Write).Start()
-				}
+		var button = currentPage.GetButton(btnIndex)
 
-				if button.SwitchPage != "" {
-					SwitchToPage(button.SwitchPage)
-				}
+		if button.Write != "" {
+			go exec.Command("xdotool", "type", "--delay", "0", button.Write).Start()
+		}
 
-				if button.Command != "" {
-					err = exec.Command("/bin/sh", "-c", button.Command).Start()
-					if err != nil {
-						log.Fatal(err)
-					}
-				}
+		if button.SwitchPage != "" {
+			SwitchToPage(button.SwitchPage)
+		}
+
+		if button.Command != "" {
+			err = exec.Command("/bin/sh", "-c", button.Command).Start()
+			if err != nil {
+				log.Fatal(err)
 			}
 		}
 	})
@@ -65,6 +62,7 @@ func SwitchToPage(pageName string) {
 	device.ClearButtons()
 
 	currentPage = config.GetPage(pageName)
+
 	for _, button := range currentPage.Buttons {
 		RenderButton(button)
 	}
