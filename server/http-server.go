@@ -20,8 +20,6 @@ func StartHttpServer(){
 			return
 		}
 
-		streamdeck.RenderButton(button)
-
 		writer.WriteHeader(http.StatusOK)
 		fmt.Fprintln(writer, "OK")
 	})

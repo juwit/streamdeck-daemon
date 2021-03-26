@@ -23,7 +23,7 @@ type Button struct {
  */
 func (button *Button) ExecCommand() {
 	if button.SwitchPage != "" {
-		SwitchToPage(button.SwitchPage)
+		switchToPage(button.SwitchPage)
 	}
 
 	if button.Write != "" {

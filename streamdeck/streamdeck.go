@@ -24,7 +24,7 @@ func InitStreamdeck(loadedConfig Config){
 
 	// switch to initial page
 	fmt.Println("Loading initial page")
-	SwitchToPage(config.InitialPage)
+	switchToPage(config.InitialPage)
 
 	device.ButtonPress(func(btnIndex int, device *streamdeck.Device, err error) {
 		if err != nil {
@@ -40,18 +40,18 @@ func Shutdown(){
 	device.ResetComms()
 }
 
-func SwitchToPage(pageName string) {
+func switchToPage(pageName string) {
 	// first, clearing buttons
 	device.ClearButtons()
 
 	currentPage = config.GetPage(pageName)
 
 	for _, button := range currentPage.Buttons {
-		RenderButton(button)
+		renderButton(button)
 	}
 }
 
-func RenderButton(button Button) {
+func renderButton(button Button) {
 	if button.Icon != "" {
 		device.WriteImageToButton(button.Key, button.Icon)
 	}
