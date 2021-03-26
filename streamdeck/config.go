@@ -12,7 +12,7 @@ type Config struct {
 	Pages []Page       `json:"pages"`
 }
 
-func LoadConfiguration() Config {
+func LoadConfiguration() *Config {
 	byteValue, err := ioutil.ReadFile("config.json")
 
 	if err != nil {
@@ -26,7 +26,7 @@ func LoadConfiguration() Config {
 	fmt.Println("Loaded configuration file")
 	fmt.Println(config)
 
-	return config
+	return &config
 }
 
 

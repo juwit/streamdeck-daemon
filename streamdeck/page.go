@@ -32,5 +32,5 @@ func (page *Page) AddButton(button *Button){
 		}
 	}
 
-	renderButton(*button)
+	renderButton(button)
 }

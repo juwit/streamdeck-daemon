@@ -7,11 +7,11 @@ import (
 
 var device *streamdeck.Device
 
-var config Config
+var config *Config
 
 var CurrentPage *Page
 
-func InitStreamdeck(loadedConfig Config){
+func InitStreamdeck(loadedConfig *Config){
 	var err error
 	device, err = streamdeck.Open()
 	if err != nil {
@@ -32,7 +32,9 @@ func InitStreamdeck(loadedConfig Config){
 		}
 
 		var button = CurrentPage.GetButton(btnIndex)
-		button.ExecCommand()
+		if button != nil {
+			button.ExecCommand()
+		}
 	})
 }
 
@@ -47,13 +49,12 @@ func switchToPage(pageName string) {
 	CurrentPage = config.GetPage(pageName)
 
 	for _, button := range CurrentPage.Buttons {
-		renderButton(button)
+		renderButton(&button)
 	}
 }
 
-func renderButton(button Button) {
+func renderButton(button *Button) {
 	if button.Icon != "" {
 		device.WriteImageToButton(button.Key, button.Icon)
 	}
 }
-
