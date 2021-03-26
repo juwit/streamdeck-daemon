@@ -4,6 +4,8 @@ import (
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
+	"log"
+	"os/exec"
 )
 
 type Config struct {
@@ -65,4 +67,20 @@ func (page *Page) GetButton(index int) *Button {
 		}
 	}
 	return nil
+}
+
+/**
+ * executes the key press on the button!
+ */
+func (button *Button) ExecCommand() {
+	if button.Write != "" {
+		go exec.Command("xdotool", "type", "--delay", "0", button.Write).Start()
+	}
+
+	if button.Command != "" {
+		err := exec.Command("/bin/sh", "-c", button.Command).Start()
+		if err != nil {
+			log.Fatal(err)
+		}
+	}
 }

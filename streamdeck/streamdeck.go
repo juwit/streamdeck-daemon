@@ -4,8 +4,6 @@ import (
 	"fmt"
 	configService "github.com/juwit/streamdeck-daemon/config"
 	"github.com/magicmonkey/go-streamdeck"
-	"log"
-	"os/exec"
 )
 
 var device *streamdeck.Device
@@ -36,19 +34,10 @@ func InitStreamdeck(loadedConfig configService.Config){
 
 		var button = currentPage.GetButton(btnIndex)
 
-		if button.Write != "" {
-			go exec.Command("xdotool", "type", "--delay", "0", button.Write).Start()
-		}
-
 		if button.SwitchPage != "" {
 			SwitchToPage(button.SwitchPage)
-		}
-
-		if button.Command != "" {
-			err = exec.Command("/bin/sh", "-c", button.Command).Start()
-			if err != nil {
-				log.Fatal(err)
-			}
+		} else {
+			button.ExecCommand()
 		}
 	})
 }
