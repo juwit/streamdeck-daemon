@@ -12,7 +12,7 @@ var device *streamdeck.Device
 
 var config configService.Config
 
-var currentPage configService.Page
+var currentPage *configService.Page
 
 func InitStreamdeck(loadedConfig configService.Config){
 	var err error
@@ -29,14 +29,10 @@ func InitStreamdeck(loadedConfig configService.Config){
 	fmt.Println("Loading initial page")
 	SwitchToPage(config.InitialPage)
 
-	// A simple yellow button in position 26
-	// device.WriteColorToButton(0, color.RGBA{255, 255, 0, 255})
-
 	device.ButtonPress(func(btnIndex int, device *streamdeck.Device, err error) {
 		if err != nil {
 			panic(err)
 		}
-		// fmt.Printf("Button %d pressed\n", btnIndex)
 
 		// find button on page definition
 		for _, button := range currentPage.Buttons {
@@ -67,15 +63,10 @@ func Shutdown(){
 func SwitchToPage(pageName string) {
 	// first, clearing buttons
 	device.ClearButtons()
-	for _, page := range config.Pages {
-		if page.Name == pageName {
-			// page found !
-			fmt.Println("Page found")
-			currentPage = page
-			for _, button := range page.Buttons {
-				RenderButton(button)
-			}
-		}
+
+	currentPage = config.GetPage(pageName)
+	for _, button := range currentPage.Buttons {
+		RenderButton(button)
 	}
 }
 

@@ -46,3 +46,13 @@ func LoadConfiguration() Config {
 
 	return config
 }
+
+
+func (config Config) GetPage(pageName string) *Page {
+	for _, page := range config.Pages {
+		if page.Name == pageName {
+			return &page
+		}
+	}
+	return nil
+}
