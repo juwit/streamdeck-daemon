@@ -2,17 +2,16 @@ package streamdeck
 
 import (
 	"fmt"
-	configService "github.com/juwit/streamdeck-daemon/config"
 	"github.com/magicmonkey/go-streamdeck"
 )
 
 var device *streamdeck.Device
 
-var config configService.Config
+var config Config
 
-var currentPage *configService.Page
+var currentPage *Page
 
-func InitStreamdeck(loadedConfig configService.Config){
+func InitStreamdeck(loadedConfig Config){
 	var err error
 	device, err = streamdeck.Open()
 	if err != nil {
@@ -57,7 +56,7 @@ func SwitchToPage(pageName string) {
 	}
 }
 
-func RenderButton(button configService.Button) {
+func RenderButton(button Button) {
 	if button.Icon != "" {
 		device.WriteImageToButton(button.Key, button.Icon)
 	}

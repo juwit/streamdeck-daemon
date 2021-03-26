@@ -8,14 +8,13 @@ import (
 	"os/signal"
 	"syscall"
 
-	configService "github.com/juwit/streamdeck-daemon/config"
 	"github.com/juwit/streamdeck-daemon/server"
 )
 
 func main() {
 
 	// load configuration
-	var config = configService.LoadConfiguration()
+	var config = streamdeck.LoadConfiguration()
 
 	// init streamdeck
 	streamdeck.InitStreamdeck(config)

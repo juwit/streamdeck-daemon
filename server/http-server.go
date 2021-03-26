@@ -3,7 +3,6 @@ package server
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/juwit/streamdeck-daemon/config"
 	"github.com/juwit/streamdeck-daemon/streamdeck"
 	"net/http"
 )
@@ -13,7 +12,7 @@ func StartHttpServer(){
 
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 
-		var button config.Button
+		var button streamdeck.Button
 
 		err := json.NewDecoder(request.Body).Decode(&button)
 		if err != nil {
