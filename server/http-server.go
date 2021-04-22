@@ -4,11 +4,12 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/juwit/streamdeck-daemon/streamdeck"
+	"log"
 	"net/http"
 )
 
 func StartHttpServer(){
-	fmt.Println("Starting http server")
+	log.Println("Starting http server")
 
 	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
 

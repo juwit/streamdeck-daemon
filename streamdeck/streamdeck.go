@@ -1,7 +1,6 @@
 package streamdeck
 
 import (
-	"fmt"
 	"github.com/magicmonkey/go-streamdeck"
 	"log"
 )
@@ -19,12 +18,12 @@ func InitStreamdeck(loadedConfig *Config){
 		panic(err)
 	}
 
-	fmt.Printf("Found device %s\n", device.GetName())
+	log.Printf("Found device %s\n", device.GetName())
 
 	config = loadedConfig
 
 	// switch to initial page
-	fmt.Println("Loading initial page")
+	log.Println("Loading initial page")
 	switchToPage(config.InitialPage)
 
 	// init brightness
@@ -50,7 +49,7 @@ func switchToPage(pageName string) {
 	page := config.GetPage(pageName)
 
 	if page == nil {
-		log.Print("page "+pageName+" not found")
+		log.Print("Page "+pageName+" not found")
 		return
 	}
 

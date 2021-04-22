@@ -2,8 +2,8 @@ package streamdeck
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
+	"log"
 )
 
 type Config struct {
@@ -23,8 +23,7 @@ func LoadConfiguration() *Config {
 
 	json.Unmarshal(byteValue, &config)
 
-	fmt.Println("Loaded configuration file")
-	fmt.Println(config)
+	log.Print("Configuration file loaded")
 
 	return &config
 }
