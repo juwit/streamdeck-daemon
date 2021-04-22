@@ -26,6 +26,9 @@ func InitStreamdeck(loadedConfig *Config){
 	fmt.Println("Loading initial page")
 	switchToPage(config.InitialPage)
 
+	// init brightness
+	device.SetBrightness(config.Brightness)
+
 	device.ButtonPress(func(btnIndex int, device *streamdeck.Device, err error) {
 		if err != nil {
 			panic(err)
