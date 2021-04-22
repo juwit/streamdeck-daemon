@@ -3,6 +3,7 @@ package streamdeck
 import (
 	"fmt"
 	"github.com/magicmonkey/go-streamdeck"
+	"log"
 )
 
 var device *streamdeck.Device
@@ -46,11 +47,17 @@ func Shutdown(){
 }
 
 func switchToPage(pageName string) {
-	// first, clearing buttons
+	page := config.GetPage(pageName)
+
+	if page == nil {
+		log.Print("page "+pageName+" not found")
+		return
+	}
+
+	CurrentPage = page
+
+	// render the page
 	device.ClearButtons()
-
-	CurrentPage = config.GetPage(pageName)
-
 	for _, button := range CurrentPage.Buttons {
 		renderButton(&button)
 	}
