@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"io/ioutil"
 	"log"
+	"os"
 )
 
 type Config struct {
@@ -13,7 +14,10 @@ type Config struct {
 }
 
 func LoadConfiguration() *Config {
-	byteValue, err := ioutil.ReadFile("config.json")
+	homeDirectory, _ := os.UserHomeDir()
+	configDirectory := "/.config/streamdeck"
+	configFile := "/config.json"
+	byteValue, err := ioutil.ReadFile(homeDirectory + configDirectory + configFile)
 
 	if err != nil {
 		panic(err)
