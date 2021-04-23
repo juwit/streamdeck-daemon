@@ -3,6 +3,7 @@ package server
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/go-chi/chi/middleware"
 	"github.com/juwit/streamdeck-daemon/streamdeck"
 	"log"
 	"net/http"
@@ -15,6 +16,8 @@ func StartHttpServer(){
 
 	router := chi.NewRouter()
 
+	router.Use(middleware.Logger)
+	
 	router.Post("/", func(writer http.ResponseWriter, request *http.Request) {
 
 		var button streamdeck.Button
