@@ -6,12 +6,16 @@ import (
 	"github.com/juwit/streamdeck-daemon/streamdeck"
 	"log"
 	"net/http"
+
+	"github.com/go-chi/chi"
 )
 
 func StartHttpServer(){
 	log.Println("Starting http server")
 
-	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
+	router := chi.NewRouter()
+
+	router.Post("/", func(writer http.ResponseWriter, request *http.Request) {
 
 		var button streamdeck.Button
 
@@ -27,5 +31,5 @@ func StartHttpServer(){
 		fmt.Fprintln(writer, "OK")
 	})
 
-	http.ListenAndServe(":8081", nil)
+	http.ListenAndServe(":8081", router)
 }

@@ -67,3 +67,7 @@ func renderButton(button *Button) {
 		device.WriteImageToButton(button.Key, button.Icon)
 	}
 }
+
+func ChangeBrightness(value int){
+	device.SetBrightness(value)
+}
