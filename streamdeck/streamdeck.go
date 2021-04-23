@@ -2,6 +2,7 @@ package streamdeck
 
 import (
 	"github.com/magicmonkey/go-streamdeck"
+	"image/color"
 	"log"
 )
 
@@ -70,6 +71,10 @@ func renderButton(button *Button) {
 	if button.Icon != "" {
 		device.WriteImageToButton(button.Key, button.Icon)
 	}
+}
+
+func clearButton(key int) {
+	device.WriteColorToButton(key, color.Black)
 }
 
 func ChangeBrightness(value int){

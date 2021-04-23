@@ -32,5 +32,27 @@ func (page *Page) AddButton(button *Button){
 		}
 	}
 
-	renderButton(button)
+	if page == CurrentPage {
+		renderButton(button)
+	}
+}
+
+func (page *Page) DeleteButton(key int){
+	var buttonIndex int
+	// find the index of the button
+	for idx, button := range page.Buttons {
+		if button.Key == key {
+			buttonIndex = idx
+		}
+	}
+	// remove the button from the array
+	// putting the button at the very end
+	page.Buttons[ len(page.Buttons) - 1 ], page.Buttons[buttonIndex] = page.Buttons[buttonIndex], page.Buttons[ len(page.Buttons) - 1 ]
+	// slicing the array to remove the last value
+	page.Buttons = page.Buttons[ : len(page.Buttons) - 1]
+
+	// clear the button on the streamdeck if the page is the current page
+	if page == CurrentPage {
+		clearButton(key)
+	}
 }

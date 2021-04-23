@@ -23,6 +23,7 @@ func StartHttpServer(){
 	router.Route("/pages/{pageName}", func(r chi.Router){
 		r.Post("/", switchToPage)
 		r.Post("/buttons/{key}", setupButton)
+		r.Delete("/buttons/{key}", removeButton)
 	})
 
 	http.ListenAndServe(":8081", router)
@@ -55,4 +56,14 @@ func setupButton(writer http.ResponseWriter, request *http.Request){
 	}
 
 	streamdeck.GetPage(page).AddButton(&button)
+}
+
+func removeButton(writer http.ResponseWriter, request *http.Request){
+	page := chi.URLParam(request, "pageName")
+
+	keyStr := chi.URLParam(request, "key")
+	key, _ := strconv.Atoi(keyStr)
+
+
+	streamdeck.GetPage(page).DeleteButton(key)
 }
