@@ -1,5 +1,7 @@
 package streamdeck
 
+import "log"
+
 type Page struct {
 	Name    string   `json:"name"`
 	Buttons []Button `json:"buttons"`
@@ -38,12 +40,16 @@ func (page *Page) AddButton(button *Button){
 }
 
 func (page *Page) DeleteButton(key int){
-	var buttonIndex int
+	var buttonIndex int = -1
 	// find the index of the button
 	for idx, button := range page.Buttons {
 		if button.Key == key {
 			buttonIndex = idx
 		}
+	}
+	if buttonIndex == -1 {
+		log.Printf("Button %d not found on page %s", key, page.Name)
+		return
 	}
 	// remove the button from the array
 	// putting the button at the very end
