@@ -20,6 +20,10 @@ func StartHttpServer(){
 
 	router.Post("/brightness/{value}", updateBrightness)
 
+	router.Route("/pages/{name}", func(r chi.Router){
+		r.Post("/", switchToPage)
+	})
+
 	router.Post("/", func(writer http.ResponseWriter, request *http.Request) {
 
 		var button streamdeck.Button
@@ -40,4 +44,9 @@ func updateBrightness(writer http.ResponseWriter, request *http.Request){
 	value := chi.URLParam(request, "value")
 	brightness, _ := strconv.Atoi(value)
 	streamdeck.ChangeBrightness(brightness)
+}
+
+func switchToPage(writer http.ResponseWriter, request *http.Request){
+	page := chi.URLParam(request, "name")
+	streamdeck.SwitchToPage(page)
 }

@@ -24,7 +24,7 @@ func InitStreamdeck(loadedConfig *Config){
 
 	// switch to initial page
 	log.Println("Loading initial page")
-	switchToPage(config.InitialPage)
+	SwitchToPage(config.InitialPage)
 
 	// init brightness
 	device.SetBrightness(config.Brightness)
@@ -45,7 +45,7 @@ func Shutdown(){
 	device.ResetComms()
 }
 
-func switchToPage(pageName string) {
+func SwitchToPage(pageName string) {
 	page := config.GetPage(pageName)
 
 	if page == nil {
