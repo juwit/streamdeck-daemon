@@ -45,8 +45,12 @@ func Shutdown(){
 	device.ResetComms()
 }
 
+func GetPage(pageName string) *Page {
+	return config.GetPage(pageName)
+}
+
 func SwitchToPage(pageName string) {
-	page := config.GetPage(pageName)
+	page := GetPage(pageName)
 
 	if page == nil {
 		log.Print("Page "+pageName+" not found")

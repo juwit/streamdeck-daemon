@@ -20,21 +20,9 @@ func StartHttpServer(){
 
 	router.Post("/brightness/{value}", updateBrightness)
 
-	router.Route("/pages/{name}", func(r chi.Router){
+	router.Route("/pages/{pageName}", func(r chi.Router){
 		r.Post("/", switchToPage)
-	})
-
-	router.Post("/", func(writer http.ResponseWriter, request *http.Request) {
-
-		var button streamdeck.Button
-
-		err := json.NewDecoder(request.Body).Decode(&button)
-		if err != nil {
-			http.Error(writer, err.Error(), http.StatusBadRequest)
-			return
-		}
-
-		streamdeck.CurrentPage.AddButton(&button)
+		r.Post("/buttons/{key}", setupButton)
 	})
 
 	http.ListenAndServe(":8081", router)
@@ -47,6 +35,24 @@ func updateBrightness(writer http.ResponseWriter, request *http.Request){
 }
 
 func switchToPage(writer http.ResponseWriter, request *http.Request){
-	page := chi.URLParam(request, "name")
+	page := chi.URLParam(request, "pageName")
 	streamdeck.SwitchToPage(page)
+}
+
+func setupButton(writer http.ResponseWriter, request *http.Request){
+	page := chi.URLParam(request, "pageName")
+
+	keyStr := chi.URLParam(request, "key")
+	key, _ := strconv.Atoi(keyStr)
+
+	var button streamdeck.Button
+	err := json.NewDecoder(request.Body).Decode(&button)
+	button.Key = key
+
+	if err != nil {
+		http.Error(writer, err.Error(), http.StatusBadRequest)
+		return
+	}
+
+	streamdeck.GetPage(page).AddButton(&button)
 }
