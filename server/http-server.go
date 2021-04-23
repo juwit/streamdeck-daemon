@@ -2,11 +2,11 @@ package server
 
 import (
 	"encoding/json"
-	"fmt"
 	"github.com/go-chi/chi/middleware"
 	"github.com/juwit/streamdeck-daemon/streamdeck"
 	"log"
 	"net/http"
+	"strconv"
 
 	"github.com/go-chi/chi"
 )
@@ -17,7 +17,9 @@ func StartHttpServer(){
 	router := chi.NewRouter()
 
 	router.Use(middleware.Logger)
-	
+
+	router.Post("/brightness/{value}", updateBrightness)
+
 	router.Post("/", func(writer http.ResponseWriter, request *http.Request) {
 
 		var button streamdeck.Button
@@ -29,10 +31,13 @@ func StartHttpServer(){
 		}
 
 		streamdeck.CurrentPage.AddButton(&button)
-
-		writer.WriteHeader(http.StatusOK)
-		fmt.Fprintln(writer, "OK")
 	})
 
 	http.ListenAndServe(":8081", router)
+}
+
+func updateBrightness(writer http.ResponseWriter, request *http.Request){
+	value := chi.URLParam(request, "value")
+	brightness, _ := strconv.Atoi(value)
+	streamdeck.ChangeBrightness(brightness)
 }
