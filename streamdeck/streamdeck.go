@@ -12,7 +12,7 @@ var config *Config
 
 var CurrentPage *Page
 
-func InitStreamdeck(loadedConfig *Config){
+func StartStreamdeck() {
 	var err error
 	device, err = streamdeck.Open()
 	if err != nil {
@@ -20,15 +20,6 @@ func InitStreamdeck(loadedConfig *Config){
 	}
 
 	log.Printf("Found device %s\n", device.GetName())
-
-	config = loadedConfig
-
-	// switch to initial page
-	log.Println("Loading initial page")
-	SwitchToPage(config.InitialPage)
-
-	// init brightness
-	device.SetBrightness(config.Brightness)
 
 	device.ButtonPress(func(btnIndex int, device *streamdeck.Device, err error) {
 		if err != nil {
@@ -40,6 +31,17 @@ func InitStreamdeck(loadedConfig *Config){
 			button.ExecCommand()
 		}
 	})
+}
+
+func InitStreamdeck(loadedConfig *Config){
+	config = loadedConfig
+
+	// switch to initial page
+	log.Println("Loading initial page")
+	SwitchToPage(config.InitialPage)
+
+	// init brightness
+	device.SetBrightness(config.Brightness)
 }
 
 func Shutdown(){

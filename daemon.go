@@ -17,9 +17,11 @@ func main() {
 	var config = streamdeck.LoadConfiguration()
 
 	// init streamdeck
+	streamdeck.StartStreamdeck()
 	streamdeck.InitStreamdeck(config)
 
 	setupShutdownHandler()
+	setupSIGHUPHandler()
 
 	// init http server
 	server.StartHttpServer()
@@ -39,3 +41,14 @@ func setupShutdownHandler() {
 	}()
 }
 
+func setupSIGHUPHandler() {
+	c := make(chan os.Signal)
+	signal.Notify(c, os.Interrupt, syscall.SIGHUP)
+	go func() {
+		for range c {
+			log.Println("SIGHUP received - reloading configuration")
+			var config = streamdeck.LoadConfiguration()
+			streamdeck.InitStreamdeck(config)
+		}
+	}()
+}
