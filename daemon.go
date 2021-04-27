@@ -1,9 +1,9 @@
 package main
 
 import (
-	"fmt"
 	"github.com/juwit/streamdeck-daemon/streamdeck"
 	_ "github.com/magicmonkey/go-streamdeck/devices"
+	"log"
 	"os"
 	"os/signal"
 	"syscall"
@@ -30,7 +30,7 @@ func setupShutdownHandler() {
 	signal.Notify(c, os.Interrupt, syscall.SIGTERM)
 	go func() {
 		<-c
-		fmt.Println("\r- Ctrl+C pressed in Terminal")
+		log.Println("SIGTERM received - shutting down")
 
 		// shutting down streamdeck
 		streamdeck.Shutdown()
