@@ -2,6 +2,8 @@
 
 Date: 12 mar. 2021
 
+Status: active
+
 ## Context
 
 Need to find some language that interacts well with an USB device,

@@ -2,6 +2,8 @@
 
 Date: 16 mar. 2021
 
+Status: deprecated by [ADR-0004](0004-use-lib-xdo-instead-of-xdotool.md)
+
 ## Context
 
 One of the requirements is that a button press could write text to
