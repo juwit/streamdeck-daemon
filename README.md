@@ -31,7 +31,7 @@ go build
 
 * github.com/magicmonkey/go-streamdeck : for basic streamdeck interaction
 * https://github.com/go-chi/chi : for http routing
-* xdotool : for sending keyboard keys on button press
+* libxdo-dev : for sending keyboard keys on button press (sudo apt install libxdo-dev)
 
 ```shell
 sudo apt install xdotool

@@ -1,6 +1,7 @@
 package streamdeck
 
 import (
+	"github.com/juwit/streamdeck-daemon/libxdo"
 	"log"
 	"os/exec"
 )
@@ -27,7 +28,7 @@ func (button *Button) ExecCommand() {
 	}
 
 	if button.Write != "" {
-		go exec.Command("xdotool", "type", "--delay", "0", button.Write).Start()
+		libxdo.TypeKeys(button.Write)
 	}
 
 	if button.Command != "" {
