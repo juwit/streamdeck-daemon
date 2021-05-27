@@ -1,0 +1,17 @@
+[Unit]
+Description=Streamdeck Daemon
+After=syslog.target network.target
+
+[Service]
+SuccessExitStatus=0
+
+User=username
+Group=username
+
+Type=simple
+
+ExecStart=/opt/streamdeck-daemon
+ExecStop=/bin/kill -15 $MAINPID
+
+[Install]
+WantedBy=multi-user.target

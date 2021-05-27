@@ -27,12 +27,19 @@ go build
 ./streamdeck-daemon
 ```
 
+## installing
+
+```shell
+sudo cp ./streamdeck-daemon /opt
+sed -i "s/username/$USER/" streamdeck-daemon.service
+sudo cp ./streamdeck-daemon.service /etc/systemd/system
+sudo systemctl daemon-reload
+sudo systemctl enable streamdeck-daemon
+sudo systemctl start streamdeck-daemon
+```
+
 ## dependencies
 
 * github.com/magicmonkey/go-streamdeck : for basic streamdeck interaction
 * https://github.com/go-chi/chi : for http routing
 * libxdo-dev : for sending keyboard keys on button press (sudo apt install libxdo-dev)
-
-```shell
-sudo apt install xdotool
-```
