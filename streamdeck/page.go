@@ -9,9 +9,9 @@ type Page struct {
 
 func (page *Page) GetButton(index int) *Button {
 	// find button on page definition
-	for _, button := range page.Buttons {
+	for idx, button := range page.Buttons {
 		if button.Key == index {
-			return &button
+			return &page.Buttons[idx]
 		}
 	}
 	return nil

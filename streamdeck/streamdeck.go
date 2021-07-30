@@ -64,8 +64,8 @@ func SwitchToPage(pageName string) {
 
 	// render the page
 	device.ClearButtons()
-	for _, button := range CurrentPage.Buttons {
-		renderButton(&button)
+	for idx, _ := range CurrentPage.Buttons {
+		renderButton(&CurrentPage.Buttons[idx])
 	}
 }
 
