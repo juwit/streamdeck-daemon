@@ -18,6 +18,7 @@ it #WorksOnMyMachine.
 ## building
 
 ```shell
+go mod tidy
 go build
 ```
 
