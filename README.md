@@ -15,6 +15,12 @@ it #WorksOnMyMachine.
 * [x] : change page on button press
 * [x] : update button on http post
 
+## installing dependencies
+
+```shell
+sudo apt install libxdo-dev
+```
+
 ## building
 
 ```shell
