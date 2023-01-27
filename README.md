@@ -36,6 +36,13 @@ go build
 
 ## installing
 
+add *udev* rules: 
+
+```shell
+sudo cp 99-streamdeck.rules /etc/udev/rules.d/
+sudo udevadm control --reload-rules
+```
+
 ```shell
 sudo cp ./streamdeck-daemon /opt
 sed -i "s/username/$USER/" streamdeck-daemon.service
